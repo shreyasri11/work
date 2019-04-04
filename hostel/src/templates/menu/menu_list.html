@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} Menu | {{block.super}} {% endblock title %}
+{% block head_extra %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/list.css' %}">
+{% endblock head_extra %}
+{% block content %}
+<br><br><br>
+<center><h1 class="heading-menu">Menu List</h1>
+</center><br>
+<div class="container">
+		
+	<div>
+		<div id="timing_div">
+			<a href="#" data-toggle="modal" data-target="#myModal">
+		    	Timing
+		  	</a><br><br>
+	  	</div>
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">TIMING</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <center>
+				<h1 id="time_heading"></h1>
+			</center>
+			<ul>
+				<li><p><b>BreakFast:</b>  {{ timing.breakfast_time }}</p></li>
+				<li><p><b>Lunch:</b>  {{ timing.lunch_time }}</p></li>
+				<li><p><b>Evening:</b>  {{ timing.evening_time }}</p></li>
+				<li><p><b>Dinner:</b>  {{ timing.dinner_time }}</p></li>
+			</ul>
+        </div>
+        <div class="modal-footer">
+        	{% if user.is_authenticated %}	
+          <a class="btn btn-info" href="{% url 'menu:timing_update' id=timing.id %}">Update</a>
+          {% endif %}
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+		{% if menu %}
+		<div id="menu_table">
+			<table class="table">
+				
+				<tr>
+					<th>Day</th>
+					<th>Breakfast</th>
+					<th>Lunch</th>
+					<th>Evening</th>
+					<th>Dinner</th>
+					<th>Last Updated</th>
+				</tr>
+				{% for m in menu %}
+					<tr>
+						<td class="menu">{{m.day}}</td>
+						<td>{{m.breakfast}}</td>
+						<td>{{m.lunch}}</td>
+						<td>{{m.evening}}</td>
+						<td>{{m.dinner}}</td>
+						<td>{{m.updated}}</td>
+						{% if user.is_authenticated %}
+				        <td>
+				        	<a href="{% url 'menu:update' id=m.id %}"><small>Edit</small></a>
+				        </td>
+				        {% endif %}
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+		{% endif %}
+		<hr>
+
+	</div>
+</div>
+
+
+{% endblock content %}

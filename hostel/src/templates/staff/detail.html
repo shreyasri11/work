@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} {{ title }}Details | {{block.super}} {% endblock title %}
+{% block head_extra %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+{% endblock head_extra %}
+{% block content %}
+<br><br>
+<center><h1 class="heading_menu">{{ title }} Details</h1></center><br>
+
+<div class="container">
+		
+	<div>
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<td>{{instance.name}}</td>
+			</tr>
+
+			<tr>
+				<th>Post</th>
+				<td>{{instance.post}}</td>
+			</tr>
+
+			<tr>
+				<th>Joined on</th>
+				<td>{{instance.timestamp}}</td>
+			</tr>
+
+			<tr>
+				<th>Mobile No.</th>
+				<td>{{instance.mobile}}</td>
+			</tr>
+
+			<tr>
+				<th>Email</th>
+				<td>{{instance.email}}</td>
+			</tr>
+
+			<tr>
+				<th>Address</th>
+				<td>{{instance.address}}</td>
+			</tr>
+
+		</table>
+		<hr>
+		<center>
+			<a class="btn btn-warning" href="{% url 'staff:update' id=instance.id %}"><small>Edit</small></a>
+	    	<a class="btn btn-danger" href="{% url 'staff:delete' id=instance.id %}"><small>Delete</small></a>
+	    </center>
+		
+	</div>
+</div>
+{% endblock content %}

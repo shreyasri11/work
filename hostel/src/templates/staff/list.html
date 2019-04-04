@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} {{title}} | {{block.super}} {% endblock title %}
+{% block head_extra %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/list.css' %}">
+{% endblock head_extra %}
+{% block content %}
+<br><br><br>
+<center><h1 class="heading-menu">{{title}} List</h1>
+</center><br>
+<div class="container">
+		
+	<div>
+		{% if staff %}
+		<table class="table">
+			
+			<tr>
+				<th>Name</th>
+				<th>Post</th>
+				<th>Salary(Rs.)</th>
+				<th>Joined</th>
+				<th>Mobile</th>
+				<th>Email</th>
+				<th>Address</th>
+				
+			</tr>
+			{% for s in staff %}
+			<tr>
+				<td><a href="{% url 'staff:detail' id=s.id %}">{{s.name}}</a></td>
+				<td>{{s.post}}</td>
+				<td>{{s.salary}}</td>
+				<td>{{s.timestamp}}</td>
+				<td>{{s.mobile}}</td>
+				<td>{{s.email}}</td>
+				<td>{{s.address}}</td>
+				{% if user.is_authenticated %}
+		        <td>
+		        	<a href="{% url 'staff:update' id=s.id %}"><small>Edit</small></a>
+		        	<a href="{% url 'staff:delete' id=s.id %}"><small>Delete</small></a>
+		        </td>
+		        {% endif %}
+			</tr>
+			{% endfor %}
+		</table>
+			
+		{% else %}
+		No staff added
+		{% endif %}
+		<hr>
+
+	</div>
+</div>
+
+
+{% endblock content %}
